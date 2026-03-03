@@ -202,56 +202,56 @@ SET SESSION unique_checks = 0;
 LOAD DATA  INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/account.csv'
 INTO TABLE Account
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (AccountID, Name, Email, Phone, Username);
 
 LOAD DATA  INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/product.csv'
 INTO TABLE Product
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (ProductID, Name, Description, Price);
 
 LOAD DATA  INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/shipping_option.csv'
 INTO TABLE ShippingOption
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (ShippingOptionID, Name, Cost, TimeToDelivery);
 
 LOAD DATA  INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/attribute.csv'
 INTO TABLE Attribute
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (AttributeID, Name, Value);
 
 LOAD DATA  INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/product_attribute.csv'
 INTO TABLE ProductAttribute
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (ProductAttributeID, ProductID, AttributeID);
 
 LOAD DATA  INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/inventory.csv'
 INTO TABLE Inventory
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (ProductID, QuantityAvailable, LastUpdate);
 
 LOAD DATA  INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/cart.csv'
 INTO TABLE Cart
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (CartID, AccountID, Status, CreatedTime, LastUpdate, DeviceType);
 
 LOAD DATA  INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/cart_product.csv'
 INTO TABLE CartProduct
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (CartProductID, CartID, ProductID, Quantity, Price);
 
@@ -259,35 +259,36 @@ IGNORE 1 LINES
 LOAD DATA  INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/order.csv'
 INTO TABLE `Order`
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (OrderID, AccountID, CartID, Status, TimePlaced, ShippingOptionID);
 
 LOAD DATA  INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/order_item.csv'
 INTO TABLE OrderItem
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (OrderItemID, OrderID, ProductID, Quantity, Price);
 
 LOAD DATA  INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/payment.csv'
 INTO TABLE Payment
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
-(PaymentID, OrderID, Method, Status, PayDate);
+(PaymentID, OrderID, Method, Status, @paydate)
+SET PayDate = NULLIF(@paydate, '');
 
 LOAD DATA  INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/return.csv'
 INTO TABLE `Return`
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (ReturnID, OrderID, AccountID, Status);
 
 LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/return_item.csv'
 INTO TABLE ReturnItem
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (ReturnItemID, ReturnID, OrderItemID, Quantity, RefundAmount);
 
