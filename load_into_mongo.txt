@@ -1,0 +1,21 @@
+mongoimport \
+  --db ecommerce \
+  --collection user_events \
+  --type csv \
+  --headerline \
+  --file user_events.csv
+
+
+db.user_events.find().forEach(function(doc) {
+  db.user_events.updateOne(
+    { _id: doc._id },
+    {
+      $set: {
+        accountId: Number(doc.accountId),
+        productId: doc.productId ? Number(doc.productId) : null,
+        sessionId: Number(doc.sessionId),
+        timestamp: new Date(doc.timestamp)
+      }
+    }
+  )
+})
