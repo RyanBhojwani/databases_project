@@ -1,0 +1,6 @@
+ShippingOptionID,Name,Cost,TimeToDelivery
+1,Standard Shipping,5.99,3-5 business days
+2,Expedited Shipping,12.99,2-3 business days
+3,Overnight Shipping,24.99,1 business day
+4,Free Shipping (Orders $50+),0.00,5-7 business days
+5,In-Store Pickup,0.00,Same day
