@@ -209,56 +209,56 @@ SHOW VARIABLES LIKE 'secure_file_priv';
 LOAD DATA LOCAL INFILE '/Users/cchaves/Desktop/databases/databases_project/out/account.csv'
 INTO TABLE Account
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (AccountID, Name, Email, Phone, Username);
 
 LOAD DATA LOCAL INFILE '/Users/cchaves/Desktop/databases/databases_project/out/product.csv'
 INTO TABLE Product
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (ProductID, Name, Description, Price);
 
 LOAD DATA LOCAL INFILE '/Users/cchaves/Desktop/databases/databases_project/out/shipping_option.csv'
 INTO TABLE ShippingOption
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (ShippingOptionID, Name, Cost, TimeToDelivery);
 
 LOAD DATA LOCAL INFILE '/Users/cchaves/Desktop/databases/databases_project/out/attribute.csv'
 INTO TABLE Attribute
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (AttributeID, Name, Value);
 
 LOAD DATA LOCAL INFILE '/Users/cchaves/Desktop/databases/databases_project/out/product_attribute.csv'
 INTO TABLE ProductAttribute
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (ProductAttributeID, ProductID, AttributeID);
 
 LOAD DATA LOCAL INFILE '/Users/cchaves/Desktop/databases/databases_project/out/inventory.csv'
 INTO TABLE Inventory
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (ProductID, QuantityAvailable, LastUpdate);
 
 LOAD DATA LOCAL INFILE '/Users/cchaves/Desktop/databases/databases_project/out/cart.csv'
 INTO TABLE Cart
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (CartID, AccountID, Status, CreatedTime, LastUpdate, DeviceType);
 
 LOAD DATA LOCAL INFILE '/Users/cchaves/Desktop/databases/databases_project/out/cart_product.csv'
 INTO TABLE CartProduct
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (CartProductID, CartID, ProductID, Quantity, Price);
 
@@ -266,35 +266,36 @@ IGNORE 1 LINES
 LOAD DATA LOCAL INFILE '/Users/cchaves/Desktop/databases/databases_project/out/order.csv'
 INTO TABLE `Order`
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (OrderID, AccountID, CartID, Status, TimePlaced, ShippingOptionID);
 
 LOAD DATA LOCAL INFILE '/Users/cchaves/Desktop/databases/databases_project/out/order_item.csv'
 INTO TABLE OrderItem
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (OrderItemID, OrderID, ProductID, Quantity, Price);
 
 LOAD DATA LOCAL INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/payment.csv'
 INTO TABLE Payment
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
-(PaymentID, OrderID, Method, Status, PayDate);
+(PaymentID, OrderID, Method, Status, @paydate)
+SET PayDate = NULLIF(@paydate, '');
 
 LOAD DATA  INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/return.csv'
 INTO TABLE `Return`
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (ReturnID, OrderID, AccountID, Status);
 
 LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/return_item.csv'
 INTO TABLE ReturnItem
 FIELDS TERMINATED BY ',' ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (ReturnItemID, ReturnID, OrderItemID, Quantity, RefundAmount);
 
